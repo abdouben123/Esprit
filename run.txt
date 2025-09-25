@@ -1,0 +1,6 @@
+chatbot:
+pyhton main.py
+server:
+node server.js
+frontend:
+npm run dev
