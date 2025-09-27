@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 27 sep. 2025 à 17:23
+-- Généré le : sam. 27 sep. 2025 à 17:29
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.1.17
 
@@ -98,13 +98,6 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `avatar` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `users`
---
-
-INSERT INTO `users` (`id`, `nom`, `prenom`, `email`, `password`, `classe`, `sexe`, `created_at`, `avatar`) VALUES
-(23, 'ben ayed', 'Sarra', 'Sarra.benayed@gmail.com', '$2a$10$gjVpsj2kD.0plFDIW1MoMegF5NVLfeUsrU/N3VvmLqtMUO95mm3.6', '4NIDS4', 'Femme', '2025-09-27 14:07:52', 'uploads/avatars/user_23.png');
 
 -- --------------------------------------------------------
 
