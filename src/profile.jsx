@@ -31,9 +31,19 @@ function Profile() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    setAvatarFile(e.target.files[0]);
-  };
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  setAvatarFile(file);
+
+  // Show preview instantly
+  if (file) {
+    setFormData((prev) => ({
+      ...prev,
+      avatar: URL.createObjectURL(file),
+    }));
+  }
+};
+
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -67,7 +77,7 @@ function Profile() {
     >
       <Navbar />
 
-      {/* ✅ Formulaire centré avec marge en haut */}
+      {/*  Formulaire centré avec marge en haut */}
       <form
         onSubmit={handleSave}
         style={{
@@ -116,7 +126,7 @@ function Profile() {
               value={formData[field] || ""}
               onChange={handleChange}
               style={{
-                width: "95%", // ✅ réduit un peu la largeur pour éviter que ça colle aux bords
+                width: "95%", //  réduit un peu la largeur pour éviter que ça colle aux bords
                 padding: 10,
                 borderRadius: 6,
                 border: "1px solid #ccc",
@@ -138,7 +148,7 @@ function Profile() {
             value={formData.password || ""}
             onChange={handleChange}
             style={{
-              width: "95%", // ✅ même réduction de largeur
+              width: "95%", //  même réduction de largeur
               padding: 10,
               borderRadius: 6,
               border: "1px solid #ccc",

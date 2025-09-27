@@ -40,7 +40,7 @@ router.post("/posts", authMiddleware, (req, res) => {
   });
 });
 
-// 📌 Récupérer tous les commentaires
+//  Récupérer tous les commentaires
 router.get("/comments", (req, res) => {
   const sql = "SELECT * FROM comments ORDER BY created_at ASC";
   db.query(sql, (err, results) => {
@@ -49,7 +49,7 @@ router.get("/comments", (req, res) => {
   });
 });
 
-// 📌 Ajouter un commentaire (et notifier le créateur du post)
+//  Ajouter un commentaire (et notifier le créateur du post)
 router.post("/comments", authMiddleware, (req, res) => {
   const { post_id, content } = req.body;
   const userId = req.user.id;
@@ -77,7 +77,7 @@ router.post("/comments", authMiddleware, (req, res) => {
   });
 });
 
-// 📌 Voter sur un post (et notifier le créateur du post)
+//  Voter sur un post (et notifier le créateur du post)
 router.post("/vote", authMiddleware, (req, res) => {
   const { post_id, vote_type } = req.body;
   const userId = req.user.id;

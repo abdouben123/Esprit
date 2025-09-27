@@ -25,10 +25,10 @@ function Navbar() {
         .then((res) => {
           setUser(res.data);
 
-          // ✅ Enregistrer user pour socket
+          //  Enregistrer user pour socket
           socket.emit("register", res.data.id);
 
-          // ✅ Charger ses notifs
+          //  Charger ses notifs
           axios
             .get("http://localhost:5000/api/notifications", {
               headers: { Authorization: `Bearer ${token}` },
@@ -38,7 +38,7 @@ function Navbar() {
         .catch(() => setUser(null));
     }
 
-    // ✅ Écouter les notifs en temps réel
+    //  Écouter les notifs en temps réel
     socket.on("newNotification", (notif) => {
       setNotifications((prev) => [notif, ...prev]);
     });
@@ -48,11 +48,11 @@ function Navbar() {
     };
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-    window.location.reload();
-  };
+ const handleLogout = () => {
+  localStorage.clear();        
+  navigate("/login");         
+  window.location.reload();   
+};
 
   const handleOpenDropdown = async () => {
     setShowDropdown(!showDropdown);

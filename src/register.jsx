@@ -10,8 +10,29 @@ function Register() {
     sexe: "Homme",
   });
 
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const validate = () => {
+    const newErrors = {};
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Veuillez saisir une adresse email valide.";
+    }
+
+    // Password validation: at least 8 chars, 1 uppercase, 1 number
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password =
+        "Le mot de passe doit contenir au moins 8 caractères, dont une majuscule et un chiffre.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,8 +41,11 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setMessage("");
+
+    if (!validate()) return;
+
+    setLoading(true);
 
     try {
       const res = await fetch("http://localhost:5000/api/auth/register", {
@@ -32,7 +56,7 @@ function Register() {
 
       const data = await res.json();
       if (res.ok) {
-        setMessage("✅ Inscription réussie ! Vous pouvez vous connecter.");
+        setMessage("Inscription réussie. Vous pouvez maintenant vous connecter.");
         setFormData({
           nom: "",
           prenom: "",
@@ -42,10 +66,10 @@ function Register() {
           sexe: "Homme",
         });
       } else {
-        setMessage("❌ " + data.message);
+        setMessage(data.message || "Une erreur est survenue lors de l'inscription.");
       }
     } catch (error) {
-      setMessage("❌ Erreur serveur. Réessayez plus tard.");
+      setMessage("Erreur serveur. Veuillez réessayer plus tard.");
     }
 
     setLoading(false);
@@ -189,6 +213,9 @@ function Register() {
             required
             style={inputStyle}
           />
+          {errors.email && (
+            <p style={{ color: "red", fontSize: "13px" }}>{errors.email}</p>
+          )}
 
           <input
             type="password"
@@ -199,6 +226,9 @@ function Register() {
             required
             style={inputStyle}
           />
+          {errors.password && (
+            <p style={{ color: "red", fontSize: "13px" }}>{errors.password}</p>
+          )}
 
           <select
             name="sexe"
@@ -225,13 +255,11 @@ function Register() {
               fontSize: "16px",
             }}
           >
-            {loading ? "Inscription..." : "S'inscrire"}
+            {loading ? "Inscription en cours..." : "S'inscrire"}
           </button>
 
           {message && (
-            <p style={{ textAlign: "center", color: message.startsWith("✅") ? "green" : "red" }}>
-              {message}
-            </p>
+            <p style={{ textAlign: "center", color: "black" }}>{message}</p>
           )}
 
           <p style={{ textAlign: "center", fontSize: "14px" }}>

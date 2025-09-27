@@ -1,5 +1,5 @@
 chatbot:
-pyhton main.py
+python main.py
 server:
 node server.js
 frontend:
